@@ -17,7 +17,8 @@ namespace MovieRental.Movie
 			return movie;
 		}
 
-		// TODO: tell us what is wrong in this method? Forget about the async, what other concerns do you have?
+		//Performance can be a concern, since there is no filter and the Movies table can have a lot of records
+		//There is no pagination either so a huge volume of records can deteriorate user experience and increase memory usage
 		public List<Movie> GetAll()
 		{
 			return _movieRentalDb.Movies.ToList();

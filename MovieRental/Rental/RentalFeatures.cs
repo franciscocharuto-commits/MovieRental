@@ -11,18 +11,19 @@ namespace MovieRental.Rental
 			_movieRentalDb = movieRentalDb;
 		}
 
-		//TODO: make me async :(
-		public Rental Save(Rental rental)
+		//This method will now be async and will no longer hold up the program while awaiting for the SaveChangesAsync command to be executed.
+		public async Task<Rental> Save(Rental rental)
 		{
 			_movieRentalDb.Rentals.Add(rental);
-			_movieRentalDb.SaveChanges();
+			await _movieRentalDb.SaveChangesAsync();
 			return rental;
 		}
 
-		//TODO: finish this method and create an endpoint for it
 		public IEnumerable<Rental> GetRentalsByCustomerName(string customerName)
 		{
-			return [];
+			return _movieRentalDb.Rentals
+				.Where(r => r.CustomerName == customerName)
+				.ToList();
 		}
 
 	}
